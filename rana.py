@@ -11,9 +11,9 @@ def calculate_histogram(image_array):
    
     histogram = [0] * 256
 
-    for i in range(im.size[0]):
-        for j in range(im.size[1]):
-            pixel_value = gray_scale.getpixel((i, j))
+    for i in range(len(image_array)):
+        for j in range(len(image_array[0])):
+            pixel_value = image_array[i][j]
             histogram[pixel_value] += 1
 
     return histogram
