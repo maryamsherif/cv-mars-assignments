@@ -1,15 +1,19 @@
 import matplotlib.pyplot as plt
 from PIL import Image
 
-def calculate_histogram(image_path):
+image_path = "D:/Desktop/assign/cv-mars-assign1/test2.jpeg"
+im = Image.open(image_path)
+gray_scale = im.convert("L")
+image_array = [[gray_scale.getpixel((i, j)) for j in range(im.size[1])] for i in range(im.size[0])]
+
+              
+def calculate_histogram(image_array):
    
-    im = Image.open(image_path)
-    gray_im = im.convert("L")
     histogram = [0] * 256
 
     for i in range(im.size[0]):
         for j in range(im.size[1]):
-            pixel_value = gray_im.getpixel((i, j))
+            pixel_value = gray_scale.getpixel((i, j))
             histogram[pixel_value] += 1
 
     return histogram
@@ -47,10 +51,9 @@ def get_color_at_percentage(cumulative_histogram, percentage):
 
 
 
-image_path = "D:/Desktop/assign/cv-mars-assign1/test2.jpeg"
 
 #Calculate the histogram
-histogram = calculate_histogram(image_path)
+histogram = calculate_histogram(image_array)
 print("Histogram (1D array):", histogram)
 
 #Calculate the cumulative histogram
