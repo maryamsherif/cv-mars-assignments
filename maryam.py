@@ -1,22 +1,3 @@
-# Modify histogram
-# In this part, you are asked to implement two functions as follows:
-# 1. StretchContrast
-    # • Input: 2D array representing the image (feel free to use a predefined function to transform an image into an array), and four numbers representing color intensities.
-    # • Output: An image presenting the effect of the contrast stretching on the input image.
-    # • Description: Implement contrast stretching as discussed in class.
-
-# 2. EqualizeHistogram
-    # • Input: 2D array representing the image (feel free to use a predefined function to transform an image into an array), 
-    # and two numbers representing color intensities.
-    # • Output: An image presenting the effect of the histogram equalization on the input image.
-    # • Description: Implement histogram equalization as discussed in class 
-    # with the modification of tuning the linearization as per the frequency of the given color intensities.
-
-# 3. Gray-scaleTransformation
-    # • Input: 2D array representing the image (feel free to use a predefined function to transform an image into an array), and four numbers representing color intensities.
-    # • Output: An image presenting the effect of the gray-scale transformation on the input image.
-    # • Description: Implement gray-scale transformation as discussed in class.
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -32,11 +13,6 @@ image = Image.open('test/cv_tut.png')
 img = np.array(image)
 
 def StretchContrast(img, a, b, c, d):
-
-    #check if there are outlying pixels and if yes, then choose c and d accordingly
-    #if no, then c and d are the min and max of the image
-    # if np.any(img < c):
-    #     c = np.min(img)
     
     scaling_factor = (b-a)/(d-c)
 
@@ -59,6 +35,13 @@ def StretchContrast(img, a, b, c, d):
             
 
 def EqualizeHistogram(img, a, b):
+    #1- calculate the histogram
+    #2- calculate the cumulative histogram
+    #3- calculate the color intensity at a certain percentage
+    #4- apply the formula
+    #5- show the image
+
+    
     return 0
     
 
