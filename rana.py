@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from PIL import Image
 
-image_path = "D:/Desktop/assign/cv-mars-assign1/test2.jpeg"
+image_path = "D:/Desktop/assign/cv-mars-assign1/test2.png"
 im = Image.open(image_path)
 gray_scale = im.convert("L")
 image_array = [[gray_scale.getpixel((i, j)) for j in range(im.size[1])] for i in range(im.size[0])]
@@ -79,4 +79,11 @@ plt.plot(range(256), cumulative_histogram, color='black')
 plt.title('Cumulative Histogram')
 plt.xlabel('Pixel Value')
 plt.ylabel('Cumulative Frequency')
+plt.show()
+
+# Plot the grayscale image
+plt.figure(figsize=(8, 6))
+plt.imshow(gray_scale, cmap="gray")
+plt.title('Grayscale Image')
+plt.axis('off')
 plt.show()
