@@ -71,23 +71,28 @@ def StretchContrast(img, a, b, c, d):
         
     
 def EqualizeHistogram(img, lower_intensity, higher_intensity):
-    # lower_intensity= fmin  
-    # higher_intensity= fmax
-    # pixel_value = f
+    # Step 1: Calculate Histogram
+    histogram = calculate_histogram(img)
 
+    # Step 2: Calculate Cumulative Histogram (CDF)
+    cdf = calculate_cumulative_histogram(histogram)
+
+    # Step 3: Apply histogram equalization within the specified intensity range
     for i in range(len(img)):
         for j in range(len(img[i])):
             pixel_value = img[i][j]
             if lower_intensity <= pixel_value <= higher_intensity:
-                img[i][j] = int((pixel_value - lower_intensity) * (255 / (higher_intensity - lower_intensity)))
+                img[i][j] = int((cdf[pixel_value] - cdf[lower_intensity]) * (255 / (cdf[higher_intensity] - cdf[lower_intensity])))
 
-            # Clip the values to the range [0, 255] if there are outlying pixel values    
+            # Clip the values to the range [0, 255] for outlying pixel values
             elif pixel_value < lower_intensity:
                 img[i][j] = 0  # Clip to 0 for values below the lower_intensity
             else:
                 img[i][j] = 255  # Clip to 255 for values above the higher_intensity
 
     return img
+
+
 
 def GrayScaleTransformation(img, x1, x2, y1, y2):
 
@@ -110,7 +115,9 @@ def GrayScaleTransformation(img, x1, x2, y1, y2):
 #main function
 if __name__ == "__main__":
 
+    # Enter the image path
     image_path = "test2.png"
+
     im = Image.open(image_path)
     gray_scale = im.convert("L")
     image_array = [[gray_scale.getpixel((i, j)) for j in range(im.size[1])] for i in range(im.size[0])]
@@ -129,24 +136,25 @@ if __name__ == "__main__":
     print("Lower Intensity:", lower_intensity)
     print("Upper Intensity:", upper_intensity)
 
-    # Stretch Contrast: 
+    # # Stretch Contrast: 
     # stretched_image = StretchContrast(image_array, 0, 255, 88, 150)
     # stretched_image = np.transpose(stretched_image)
     # plt.subplot(121), plt.imshow(gray_scale, cmap='gray'), plt.title('Original Image')
     # plt.subplot(122), plt.imshow(stretched_image, cmap='gray'), plt.title('Stretched Image')
     # plt.show()
     
-    # Equalize Histogram:
+    # #Equalize Histogram:
     # equalized_image = EqualizeHistogram(image_array, lower_intensity, upper_intensity)
     # equalized_image = np.transpose(equalized_image)
     # plt.subplot(121), plt.imshow(gray_scale, cmap='gray'), plt.title('Original Image')
     # plt.subplot(122), plt.imshow(equalized_image, cmap='gray'), plt.title('Equalized Image')
     # plt.show()
 
-    # Gray Scale Transformation:
-    # transformed_image = GrayScaleTransformation(image_array, lower_intensity, higher_intensity, 10, 200)
+    # #Gray Scale Transformation:
+    # transformed_image = GrayScaleTransformation(image_array, lower_intensity, upper_intensity, 10, 200)
     # transformed_image = np.transpose(transformed_image)
     # plt.subplot(121), plt.imshow(gray_scale, cmap='gray'), plt.title('Original Image')
     # plt.subplot(122), plt.imshow(transformed_image, cmap='gray'), plt.title('Transformed Image')
     # plt.show()
+
     pass
