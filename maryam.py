@@ -77,20 +77,27 @@ def EqualizeHistogram(img, lower_intensity, higher_intensity):
     # Step 2: Calculate Cumulative Histogram (CDF)
     cdf = calculate_cumulative_histogram(histogram)
 
-    # Step 3: Apply histogram equalization within the specified intensity range
-    for i in range(len(img)):
-        for j in range(len(img[i])):
+    # Calculate the minimum value in the CDF
+    cdf_min = min(cdf)
+
+    # Define L as the number of distinct intensity values (assuming 256 for typical grayscale)
+    L = 256
+
+    # Step 3: Apply histogram equalization using the specified formula
+    M, N = len(img), len(img[0])  # Image dimensions
+    for i in range(M):
+        for j in range(N):
             pixel_value = img[i][j]
             if lower_intensity <= pixel_value <= higher_intensity:
-                img[i][j] = int((cdf[pixel_value] - cdf[lower_intensity]) * (255 / (cdf[higher_intensity] - cdf[lower_intensity])))
-
-            # Clip the values to the range [0, 255] for outlying pixel values
+                img[i][j] = round(((cdf[pixel_value] - cdf_min) / ((M * N) - cdf_min)) * (L - 1))
+            # Clip the values to the range [0, L-1] for outlying pixel values
             elif pixel_value < lower_intensity:
-                img[i][j] = 0  # Clip to 0 for values below the lower_intensity
+                img[i][j] = 0
             else:
-                img[i][j] = 255  # Clip to 255 for values above the higher_intensity
+                img[i][j] = L - 1
 
     return img
+
 
 
 
