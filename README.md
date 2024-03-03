@@ -1,4 +1,14 @@
-# Computer Vision Course - Assignment 1
+# Computer Vision Course - Assignment 2
 ## Team : Mars 🌠
 ### Project description:
-The main aim of this assignment is to experiment with histogram modification approaches, alongside seeing their effects on images. In more details, given an input image, as a first step, the contrast of such an image is to be evaluated. Second, the three approaches (contrast stretching, histogram equalization, and gray-scale transformation) are to be performed in the input image (producing three outputs). Finally, for each of the three outputs, the contrast is re-evaluated.
+The main aim of this assignment is to analyze the interaction between
+various scoring functions and automatic threshold detection. In more
+specific terms, scoring functions (corner detections) are to be applied
+to the image, then the resulting gradient magnitudes are to be
+subjected to automatic threshold detection. As per that, the following
+components are to be implemented:
+1. Corner detection:
+    a. Harris.
+    b. SUSAN.
+2. Automatic threshold detection:
+    a. Calculate convex hull.
